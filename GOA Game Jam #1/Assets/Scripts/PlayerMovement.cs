@@ -5,36 +5,36 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    private float MoveLR;
-    //left and right, Up down moves
-    private float MoveUD;
-    private Rigidbody rb;
 
-    Vector3 mouse_pos;
-    Transform target = null;
-    Vector3 object_pos;
+    public Rigidbody rb;
+    public Camera cam;
+
+    Vector3 movement;
+    Vector3 mousePos;
 
     // Start is called before the first frame update
     void Start()
     {
-        speed = 3;
-        rb = GetComponent<Rigidbody>();
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        mouse_pos = Input.mousePosition;
-        mouse_pos.y = 8.25f; //distance from camera n player
-        transform.LookAt(mouse_pos);
-        Debug.Log(transform.position);
 
-        MoveLR = Input.GetAxis("Horizontal");
-        MoveUD = Input.GetAxis("Vertical");
-        //x left n right, y FIXED, z up n down
-        rb.velocity = new Vector3(speed * MoveLR, 0.55f, rb.velocity.x);
-        rb.velocity = new Vector3(rb.velocity.z, 0.55f, speed * MoveUD);
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.z = Input.GetAxisRaw("Vertical");
 
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+  
+    }
 
+    private void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
+
+        Vector3 lookDir = mousePos - rb.position;
+        float angle = Mathf.Atan2(lookDir.z, lookDir.x) * Mathf.Rad2Deg - 90f;
+        rb.rotation = Quaternion.Euler(0,angle,0);
     }
 }
