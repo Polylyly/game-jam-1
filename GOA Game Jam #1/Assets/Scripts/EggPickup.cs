@@ -15,6 +15,7 @@ public class EggPickup : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
+            //&& ItemsCarried < 2
             if (Input.GetKey(KeyCode.E))
             {
                 this.gameObject.SetActive(false);
