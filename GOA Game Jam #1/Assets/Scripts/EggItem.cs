@@ -60,8 +60,4 @@ public class EggItem : MonoBehaviour
         InRightHand = true;
 
     }
-    void cloneEgg()
-    {
-        Debug.Log("test");
-    }
 }

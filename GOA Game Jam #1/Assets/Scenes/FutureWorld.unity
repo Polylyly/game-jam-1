@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -714,6 +714,7 @@ GameObject:
   - component: {fileID: 1574121330}
   - component: {fileID: 1574121331}
   - component: {fileID: 1574121332}
+  - component: {fileID: 1574121333}
   m_Layer: 0
   m_Name: Third Person Player
   m_TagString: Player
@@ -791,6 +792,18 @@ MonoBehaviour:
   attackMask:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &1574121333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574121326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4705bf1faa1364b529c2edce765ba394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1743022210
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,7 +881,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743022210}
-  m_LocalRotation: {x: 0.08336916, y: 0.70577013, z: -0.084242135, w: 0.69845647}
+  m_LocalRotation: {x: 0.08336916, y: 0.7057701, z: -0.08424213, w: 0.69845647}
   m_LocalPosition: {x: -3.8400004, y: 4.2, z: -0.7199995}
   m_LocalScale: {x: 1, y: 0.9999999, z: 1.0000001}
   m_ConstrainProportionsScale: 0
@@ -1070,7 +1083,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089715273}
-  m_LocalRotation: {x: 0.08336916, y: 0.70577013, z: -0.084242135, w: 0.69845647}
+  m_LocalRotation: {x: 0.08336916, y: 0.7057701, z: -0.08424213, w: 0.69845647}
   m_LocalPosition: {x: -3.8400004, y: 4.2, z: -0.7199995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
