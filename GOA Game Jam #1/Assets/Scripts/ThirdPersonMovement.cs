@@ -13,6 +13,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private bool InLeftHand;
     private bool InRightHand;
+    private float itemsHeld;
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //player has nothing in their hand at beginning of game
         InLeftHand = false;
         InRightHand = false;
+        itemsHeld = 0;
     }
 
     // Update is called once per frame
@@ -45,20 +47,49 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (other.gameObject.tag == "Fridge")
         {
-
-            if (Input.GetKey(KeyCode.E))
+            if (itemsHeld == 0)
+            {
+                Debug.Log("both hands empty!");
+                if (Input.GetKey(KeyCode.E))
+                {
+                    EggItem.instance.GrabEggLeft();
+                    InLeftHand = true;
+                    itemsHeld += 1;
+                }
+            }
+            else if (itemsHeld == 1)
             {
                 if (InLeftHand == false)
                 {
-                    InLeftHand = true;
-                    EggItem.instance.GrabEggLeft();
+                    if (Input.GetKey(KeyCode.E))
+                    {
+                        EggItem.instance.GrabEggLeft();
+                        InLeftHand = true;
+                        itemsHeld += 1;
+                    }
                 }
-                if (Input.GetKey(KeyCode.E) && InRightHand == false)
+                else if (InRightHand == false)
                 {
-                    EggItem.instance.GrabEggRight();
-                    InRightHand = true;
+                    if (Input.GetKey(KeyCode.E))
+                    {
+                        EggItem.instance.GrabEggRight();
+                        InRightHand = true;
+                        itemsHeld += 1;
+                    }
                 }
             }
+            else if (itemsHeld == 2)
+            {
+                Debug.Log("hands full!");
+            }
+            //Input.GetKey(KeyCode.E)
+                    //Debug.Log("grabbed w left");
+                    //EggItem.instance.GrabEggLeft();
+                    //InLeftHand = true;
+                    
+                    //Debug.Log("grabbed w right");
+                    //EggItem.instance.GrabEggRight();
+                    //InRightHand = true;
         }
     }
 }

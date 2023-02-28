@@ -692,7 +692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftHandEmpty: {fileID: 1646029791}
   RightHandEmpty: {fileID: 320097057}
-  Egg: {fileID: 0}
+  Egg: {fileID: 982906592}
 --- !u!1 &1196157288
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ public class EggItem : MonoBehaviour
     public Transform RightHandEmpty;
 
     public GameObject Egg;
-    private Transform spawnPoint;
 
     private bool InLeftHand;
     private bool InRightHand;
@@ -34,16 +33,7 @@ public class EggItem : MonoBehaviour
     {
         //cloneEgg = GameObject.FindGameObjectWithTag("CloneofEgg");
 
-        while (InLeftHand == true)
-        {
-
-            //cloneEgg.transform.position = spawnPoint;
-        }
-        while (InRightHand == true)
-        {
-
-            //cloneEgg.transform.position = spawnPoint;
-        }
+        
     }
 
     public void GrabEggLeft()
