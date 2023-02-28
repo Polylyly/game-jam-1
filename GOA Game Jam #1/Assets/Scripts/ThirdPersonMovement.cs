@@ -41,19 +41,19 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(direction * speed * Time.deltaTime);
         }
     }
-    private void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Fridge")
         {
-            //&& ItemsCarried < 2
+            
             if (Input.GetKey(KeyCode.E))
             {
                 if (InLeftHand == false)
                 {
-                    EggItem.instance.GrabEggLeft();
                     InLeftHand = true;
+                    EggItem.instance.GrabEggLeft();
                 }
-                else if (InRightHand == false)
+                if (Input.GetKey(KeyCode.E) && InRightHand == false)
                 {
                     EggItem.instance.GrabEggRight();
                     InRightHand = true;
