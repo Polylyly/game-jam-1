@@ -38,14 +38,14 @@ public class EggItem : MonoBehaviour
 
     public void GrabEggLeft()
     {
-        Debug.Log("test");
+        //Debug.Log("test");
         Instantiate(Egg, LeftHandEmpty);
         InLeftHand = true;
 
     }
     public void GrabEggRight()
     {
-        Debug.Log("test");
+        //Debug.Log("test");
         Instantiate(Egg, RightHandEmpty);
         InRightHand = true;
 

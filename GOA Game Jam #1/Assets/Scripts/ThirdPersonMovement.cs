@@ -13,7 +13,15 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private bool InLeftHand;
     private bool InRightHand;
-    private float itemsHeld;
+
+    private int eTotal = 0;
+    public float maxDelay = .5f;
+    public float timeRemaining = .5f;
+    private bool eWithinDelay;
+
+    //private float lastClickTime = 0.5f;
+    //private const float DoubleClickTime = .2f;
+    //private float itemsHeld;
 
     private void Awake()
     {
@@ -25,7 +33,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //player has nothing in their hand at beginning of game
         InLeftHand = false;
         InRightHand = false;
-        itemsHeld = 0;
+        //itemsHeld = 0;
     }
 
     // Update is called once per frame
@@ -47,49 +55,46 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (other.gameObject.tag == "Fridge")
         {
-            if (itemsHeld == 0)
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("both hands empty!");
-                if (Input.GetKey(KeyCode.E))
+                //pressed e + 1
+                eTotal += 1;
+                //reset time
+                timeRemaining = maxDelay;
+                //start countdown
+                timeRemaining -= Time.deltaTime;
+
+                if (InLeftHand == false)
                 {
                     EggItem.instance.GrabEggLeft();
                     InLeftHand = true;
-                    itemsHeld += 1;
                 }
             }
-            else if (itemsHeld == 1)
+
+
+            if((eTotal == 2) && (timeRemaining < maxDelay))
             {
-                if (InLeftHand == false)
+                eTotal = 0;
+                Debug.Log("double click!");
+                if(InRightHand == false)
                 {
-                    if (Input.GetKey(KeyCode.E))
-                    {
-                        EggItem.instance.GrabEggLeft();
-                        InLeftHand = true;
-                        itemsHeld += 1;
-                    }
-                }
-                else if (InRightHand == false)
-                {
-                    if (Input.GetKey(KeyCode.E))
-                    {
-                        EggItem.instance.GrabEggRight();
-                        InRightHand = true;
-                        itemsHeld += 1;
-                    }
+                    EggItem.instance.GrabEggRight();
+                    InRightHand = true;
                 }
             }
-            else if (itemsHeld == 2)
-            {
-                Debug.Log("hands full!");
-            }
+
+
+            //EggItem.instance.GrabEggRight();
+            //InRightHand = true;
             //Input.GetKey(KeyCode.E)
-                    //Debug.Log("grabbed w left");
-                    //EggItem.instance.GrabEggLeft();
-                    //InLeftHand = true;
-                    
-                    //Debug.Log("grabbed w right");
-                    //EggItem.instance.GrabEggRight();
-                    //InRightHand = true;
+            //Debug.Log("grabbed w left");
+            //EggItem.instance.GrabEggLeft();
+            //InLeftHand = true;
+
+            //Debug.Log("grabbed w right");
+            //EggItem.instance.GrabEggRight();
+            //InRightHand = true;
         }
     }
 }
