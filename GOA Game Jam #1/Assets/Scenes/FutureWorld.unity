@@ -804,6 +804,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4705bf1faa1364b529c2edce765ba394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pastAllocatedTime: 5
+  futureAllocatedTime: 10
+  destination: 
 --- !u!1 &1743022210
 GameObject:
   m_ObjectHideFlags: 0

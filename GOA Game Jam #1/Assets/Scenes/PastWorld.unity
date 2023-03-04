@@ -1562,6 +1562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1196157291}
   speed: 15
+  headRotateSpeed: 700
 --- !u!143 &1196157291
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1592,6 +1593,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4705bf1faa1364b529c2edce765ba394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pastAllocatedTime: 100
+  futureAllocatedTime: 10
+  destination: 
 --- !u!1 &1228497370
 GameObject:
   m_ObjectHideFlags: 0
