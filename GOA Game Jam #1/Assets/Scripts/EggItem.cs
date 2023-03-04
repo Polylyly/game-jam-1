@@ -7,9 +7,15 @@ public class EggItem : MonoBehaviour
 
     public static EggItem instance;
 
-    public GameObject LeftHandEmpty;
-    //Vector3 LeftHandPosition = LeftHandEmpty.transform.position;
-    public GameObject RightHandEmpty;
+    public Transform LeftHandEmpty;
+    public Transform RightHandEmpty;
+
+    public GameObject Egg;
+
+    private bool InLeftHand;
+    private bool InRightHand;
+
+    //private GameObject cloneEgg;
 
     private void Awake()
     {
@@ -19,21 +25,29 @@ public class EggItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //cloneEgg = GameObject.FindGameObjectWithTag("CloneofEgg");
+
+
     }
 
     public void GrabEggLeft()
     {
+        //Debug.Log("test");
+        Instantiate(Egg, LeftHandEmpty);
+        InLeftHand = true;
 
     }
     public void GrabEggRight()
     {
+        //Debug.Log("test");
+        Instantiate(Egg, RightHandEmpty);
+        InRightHand = true;
 
     }
 }

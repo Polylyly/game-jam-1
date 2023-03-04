@@ -14,6 +14,11 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool InLeftHand;
     private bool InRightHand;
 
+    private int eTotal;
+    public float maxDelay = 1f;
+    public float timeRemaining;
+    private bool eWithinDelay;
+
     private void Awake()
     {
         instance = this;
@@ -24,6 +29,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //player has nothing in their hand at beginning of game
         InLeftHand = false;
         InRightHand = false;
+        eTotal = 0;
     }
 
     // Update is called once per frame
@@ -48,24 +54,69 @@ public class ThirdPersonMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotate, headRotateSpeed * Time.deltaTime);
         }
     }
-    private void OnTriggerStay(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Fridge")
         {
-            //&& ItemsCarried < 2
-            if (Input.GetKey(KeyCode.E))
+            Debug.Log("left fridge");
+        }
+    }
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Fridge")
+        {
+            Debug.Log("near fridge");
+            if (Input.GetKeyDown(KeyCode.E))
             {
+                Debug.Log("pressed E!");
+                //pressed e + 1
+                eTotal += 1;
+
                 if (InLeftHand == false)
                 {
                     EggItem.instance.GrabEggLeft();
                     InLeftHand = true;
                 }
-                else if (InRightHand == false)
+            }
+
+            if (eTotal == 1)
+            {
+                
+                //reset time
+                timeRemaining = maxDelay;
+                //start countdown
+                timeRemaining -= Time.deltaTime;
+            }
+
+            if(timeRemaining <= 0)
+            {
+                //time ran out
+                Debug.Log("time ran out!");
+                timeRemaining = maxDelay;
+            }
+            if ((eTotal == 2) && (timeRemaining < maxDelay))
+            {
+                Debug.Log("double click!");
+                if (InRightHand == false)
                 {
                     EggItem.instance.GrabEggRight();
                     InRightHand = true;
                 }
+
+                eTotal = 0;
             }
+
+
+            //EggItem.instance.GrabEggRight();
+            //InRightHand = true;
+            //Input.GetKey(KeyCode.E)
+            //Debug.Log("grabbed w left");
+            //EggItem.instance.GrabEggLeft();
+            //InLeftHand = true;
+
+            //Debug.Log("grabbed w right");
+            //EggItem.instance.GrabEggRight();
+            //InRightHand = true;
         }
     }
 }
