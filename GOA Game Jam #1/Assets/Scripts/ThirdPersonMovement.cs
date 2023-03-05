@@ -54,11 +54,30 @@ public class ThirdPersonMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotate, headRotateSpeed * Time.deltaTime);
         }
     }
+    public void TellLeftHandFalse()
+    {
+        InLeftHand = false;
+    }
+    public void TellLeftHandTrue()
+    {
+        InLeftHand = true;
+    }
+    public void TellRightHandFalse()
+    {
+        InRightHand = false;
+    }
+    public void TellRightHandTrue()
+    {
+        InLeftHand = true;
+    }
     public void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Fridge")
+        if (other.gameObject.tag == "Oven")
         {
-            Debug.Log("left fridge");
+            if (Input.GetKey(KeyCode.Q))
+            {
+
+            }
         }
     }
     public void OnTriggerStay(Collider other)
@@ -66,7 +85,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (other.gameObject.tag == "Fridge")
         {
             Debug.Log("near fridge");
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
             {
                 Debug.Log("pressed E!");
                 //pressed e + 1

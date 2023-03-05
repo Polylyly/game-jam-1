@@ -10,6 +10,8 @@ public class EggItem : MonoBehaviour
     public Transform LeftHandEmpty;
     public Transform RightHandEmpty;
 
+    private GameObject cloneEggLeft;
+    private GameObject cloneEggRight;
     public GameObject Egg;
 
     private bool InLeftHand;
@@ -39,15 +41,26 @@ public class EggItem : MonoBehaviour
     public void GrabEggLeft()
     {
         //Debug.Log("test");
-        Instantiate(Egg, LeftHandEmpty);
+        cloneEggLeft = Instantiate(Egg, LeftHandEmpty);
         InLeftHand = true;
 
     }
     public void GrabEggRight()
     {
         //Debug.Log("test");
-        Instantiate(Egg, RightHandEmpty);
+        cloneEggRight = Instantiate(Egg, RightHandEmpty);
         InRightHand = true;
 
+    }
+    public void DropEggLeft()
+    {
+        Destroy(cloneEggLeft);
+        ThirdPersonMovement.instance.TellLeftHandFalse();
+    }
+
+    public void DropEggRight()
+    {
+        Destroy(cloneEggRight);
+        ThirdPersonMovement.instance.TellRightHandFalse();
     }
 }
