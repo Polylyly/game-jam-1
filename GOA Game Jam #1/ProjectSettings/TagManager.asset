@@ -6,8 +6,9 @@ TagManager:
   tags:
   - SugarSilo
   - Oven
-  - Stove
   - Fridge
+  - Egg
+  - Grill
   layers:
   - Default
   - TransparentFX

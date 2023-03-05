@@ -13,13 +13,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private bool InLeftHand;
     private bool InRightHand;
+    private bool NearOven;
 
-    private int eTotal;
-    private int qTotal;
-    public float maxDelay = 1f;
-    public float eTimeRemaining;
-    public float qTimeRemaining;
-    private bool eWithinDelay;
+    //private bool eWithinDelay;
 
     private void Awake()
     {
@@ -31,7 +27,6 @@ public class ThirdPersonMovement : MonoBehaviour
         //player has nothing in their hand at beginning of game
         InLeftHand = false;
         InRightHand = false;
-        eTotal = 0;
     }
 
     // Update is called once per frame
@@ -56,6 +51,8 @@ public class ThirdPersonMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotate, headRotateSpeed * Time.deltaTime);
         }
     }
+
+    //In case other scripts need to tell the player the hand is empty/full
     public void TellLeftHandFalse()
     {
         InLeftHand = false;
@@ -72,59 +69,34 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         InLeftHand = true;
     }
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Oven")
-        {
-            
-        }
-    }
 
     public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Fridge")
         {
-            Debug.Log("near fridge");
-            if (Input.GetKeyDown(KeyCode.E))
+            //left mouse button
+            if (Input.GetMouseButton(0))
             {
-                Debug.Log("pressed E!");
-                //pressed e + 1
-                eTotal += 1;
-
+                Debug.Log("Left Click");
                 if (InLeftHand == false)
                 {
                     EggItem.instance.GrabEggLeft();
                     InLeftHand = true;
                 }
+
             }
 
-            if (eTotal == 1)
+            //right mouse button
+            if (Input.GetMouseButton(1))
             {
-                
-                //reset time
-                eTimeRemaining = maxDelay;
-                //start countdown
-                eTimeRemaining -= Time.deltaTime;
-            }
-
-            if(eTimeRemaining <= 0)
-            {
-                //time ran out
-                Debug.Log("time ran out!");
-                eTimeRemaining = maxDelay;
-            }
-            if ((eTotal == 2) && (eTimeRemaining < maxDelay))
-            {
-                Debug.Log("double click!");
                 if (InRightHand == false)
                 {
                     EggItem.instance.GrabEggRight();
                     InRightHand = true;
                 }
-
-                eTotal = 0;
             }
 
+            //notes to self/easy copy and paste :))
 
             //EggItem.instance.GrabEggRight();
             //InRightHand = true;
@@ -132,7 +104,6 @@ public class ThirdPersonMovement : MonoBehaviour
             //Debug.Log("grabbed w left");
             //EggItem.instance.GrabEggLeft();
             //InLeftHand = true;
-
             //Debug.Log("grabbed w right");
             //EggItem.instance.GrabEggRight();
             //InRightHand = true;
@@ -141,43 +112,23 @@ public class ThirdPersonMovement : MonoBehaviour
         if (other.gameObject.tag == "Oven")
         {
             Debug.Log("near oven");
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetMouseButton(0))
             {
-                Debug.Log("Pressed Q");
-                //pressed e - 1
-                eTotal -= 1;
-
+                //in something in left hand...
                 if (InLeftHand == true)
                 {
+                    //put the left hand item in left slot
                     EggItem.instance.DropEggLeft();
                     InLeftHand = false;
                 }
             }
-
-            if (eTotal == 1)
+            if (Input.GetMouseButton(1))
             {
-                //reset time
-                qTimeRemaining = maxDelay;
-                //start countdown
-                qTimeRemaining -= Time.deltaTime;
-            }
-
-            if (qTimeRemaining <= 0)
-            {
-                //time ran out
-                Debug.Log("time ran out!");
-                qTimeRemaining = maxDelay;
-            }
-            if ((eTotal == 0) && (qTimeRemaining < maxDelay))
-            {
-                Debug.Log("double click!");
                 if (InRightHand == true)
                 {
                     EggItem.instance.DropEggRight();
                     InRightHand = false;
                 }
-
-                qTotal = 0;
             }
         }
     }
