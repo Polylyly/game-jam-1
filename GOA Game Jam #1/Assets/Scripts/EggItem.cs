@@ -17,6 +17,10 @@ public class EggItem : MonoBehaviour
     private GameObject cloneEggRight;
     public GameObject Egg;
 
+    public GameObject Egg;
+
+    private bool InLeftHand;
+    private bool InRightHand;
 
     //private GameObject cloneEgg;
 
@@ -40,6 +44,9 @@ public class EggItem : MonoBehaviour
 
     public void GrabEggLeft()
     {
+        //Debug.Log("test");
+        Instantiate(Egg, LeftHandEmpty);
+        InLeftHand = true;
 
         cloneEggLeft = Instantiate(Egg, LeftHandEmpty);
         cloneEggLeft.tag = "Egg";
@@ -47,6 +54,9 @@ public class EggItem : MonoBehaviour
     }
     public void GrabEggRight()
     {
+        //Debug.Log("test");
+        Instantiate(Egg, RightHandEmpty);
+        InRightHand = true;
 
         cloneEggRight = Instantiate(Egg, RightHandEmpty);
         cloneEggRight.tag = "Egg";
