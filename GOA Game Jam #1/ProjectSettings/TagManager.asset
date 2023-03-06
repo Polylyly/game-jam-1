@@ -6,9 +6,8 @@ TagManager:
   tags:
   - SugarSilo
   - Oven
+  - Stove
   - Fridge
-  - Egg
-  - Grill
   layers:
   - Default
   - TransparentFX
@@ -17,8 +16,8 @@ TagManager:
   - Water
   - UI
   - 
-  - groundLayer
-  - playerLayer
+  - 
+  - 
   - 
   - 
   - 
