@@ -10,9 +10,13 @@ public class ChangeScene : MonoBehaviour
     public float futureAllocatedTime;
     public string destination;
 
+    public static int enemiesLeftFromPrevious;
+    public static int currentIteration;
+
     // Start is called before the first frame update
     void Start()
     {
+        currentIteration = currentIteration + 1;
         if (SceneManager.GetActiveScene().name == "PastWorld")
         {
             destination = "Future";
@@ -44,11 +48,17 @@ public class ChangeScene : MonoBehaviour
     {
         if (destination.Equals("Past"))
         {
+            GenerateEnemies.currentEnemyCount = enemiesLeftFromPrevious;
             SceneManager.LoadScene("PastWorld");
         }
         else if (destination.Equals("Future"))
         {
             SceneManager.LoadScene("FutureWorld");
         }
+    }
+
+    public static void setNumbers()
+    {
+
     }
 }

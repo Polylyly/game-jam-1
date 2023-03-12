@@ -9,6 +9,7 @@ TagManager:
   - Fridge
   - Egg
   - Grill
+  - Enemy
   layers:
   - Default
   - TransparentFX
