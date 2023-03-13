@@ -10,6 +10,9 @@ TagManager:
   - Egg
   - Grill
   - Enemy
+  - Steak
+  - Second Fridge
+  - Sink
   layers:
   - Default
   - TransparentFX

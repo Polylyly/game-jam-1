@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EggItem : MonoBehaviour
+public class SteakItem : MonoBehaviour
 {
 
-    public static EggItem instance;
+    public static SteakItem instance;
 
     public Transform LeftHandEmpty;
     public Transform RightHandEmpty;
@@ -13,12 +13,10 @@ public class EggItem : MonoBehaviour
     public Transform LeftOvenSlot;
     public Transform RightOvenSlot;
 
-    private GameObject cloneEggLeft;
-    private GameObject cloneEggRight;
-    public GameObject Egg;
+    private GameObject cloneSteakLeft;
+    private GameObject cloneSteakRight;
+    public GameObject Steak;
 
-
-    //private GameObject cloneEgg;
 
     private void Awake()
     {
@@ -34,49 +32,49 @@ public class EggItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //cloneEgg = GameObject.FindGameObjectWithTag("CloneofEgg");
         
+
     }
 
-    public void GrabEggLeft()
+    public void GrabSteakLeft()
     {
 
-        cloneEggLeft = Instantiate(Egg, LeftHandEmpty);
-        cloneEggLeft.tag = "Egg";
+        cloneSteakLeft = Instantiate(Steak, LeftHandEmpty);
+        cloneSteakLeft.tag = "Steak";
 
     }
-    public void GrabEggRight()
+    public void GrabSteakRight()
     {
 
-        cloneEggRight = Instantiate(Egg, RightHandEmpty);
-        cloneEggRight.tag = "Egg";
+        cloneSteakRight = Instantiate(Steak, RightHandEmpty);
+        cloneSteakRight.tag = "Steak";
 
     }
-    public void DropEggLeft()
+    public void DropSteakLeft()
     {
         //find child of left hand empty
         GameObject LeftHandEmpty = GameObject.Find("Left Hand");
-        cloneEggLeft = LeftHandEmpty.transform.GetChild(0).gameObject;
+        cloneSteakLeft = LeftHandEmpty.transform.GetChild(0).gameObject;
 
         //destroy and replace in slot
-        Destroy(cloneEggLeft);
-        Instantiate(Egg, LeftOvenSlot);
+        Destroy(cloneSteakLeft);
+        Instantiate(Steak, LeftOvenSlot);
 
         //tell player oven is full 
         ThirdPersonMovement.instance.LeftOvenSlotFill();
         OvenPickup.instance.LeftOvenSlotFill();
     }
 
-    public void DropEggRight()
+    public void DropSteakRight()
     {
-        
+
         //Find child of right hand empty
         GameObject RightHandEmpty = GameObject.Find("Right Hand");
-        cloneEggRight = RightHandEmpty.transform.GetChild(0).gameObject;
+        cloneSteakRight = RightHandEmpty.transform.GetChild(0).gameObject;
 
         //destroy and replace in slot
-        Destroy(cloneEggRight);
-        Instantiate(Egg, RightOvenSlot);
+        Destroy(cloneSteakRight);
+        Instantiate(Steak, RightOvenSlot);
 
         //tell player oven is full 
         ThirdPersonMovement.instance.RightOvenSlotFill();

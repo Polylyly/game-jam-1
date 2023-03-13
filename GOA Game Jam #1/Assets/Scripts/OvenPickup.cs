@@ -10,8 +10,11 @@ public class OvenPickup : MonoBehaviour
     public Transform LeftSlot;
     public Transform RightSlot;
 
-    private bool InLeftSlot;
-    private bool InRightSlot;
+    private bool InLeftOvenSlot;
+    private bool InRightOvenSlot;
+
+    GameObject LeftOvenIngredient;
+    GameObject RightOvenIngredient;
 
     private void Awake()
     {
@@ -21,8 +24,8 @@ public class OvenPickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InLeftSlot = false;
-        InRightSlot = false;
+        InLeftOvenSlot = false;
+        InRightOvenSlot = false;
     }
 
     // Update is called once per frame
@@ -30,11 +33,21 @@ public class OvenPickup : MonoBehaviour
     {
         
     }
+    public void LeftOvenSlotFill()
+    {
+        InLeftOvenSlot = true;
 
-    //public void LeftSlotFill(ingredient)
-    
+        LeftOvenIngredient = LeftSlot.transform.GetChild(0).gameObject;
+    }
+    public void RightOvenSlotFill()
+    {
+        InRightOvenSlot = true;
 
-    //public void RightSlotFill(ingredient)
-    
-    //public class ingredient()
+        RightOvenIngredient = RightSlot.transform.GetChild(0).gameObject;
+    }
+
+    public void SteaknEggsRecipe()
+    {
+        //start timer --> yield results 
+    }
 }

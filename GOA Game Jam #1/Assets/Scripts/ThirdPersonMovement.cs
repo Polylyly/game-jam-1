@@ -13,7 +13,15 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private bool InLeftHand;
     private bool InRightHand;
-    private bool NearOven;
+    private bool InLeftOvenSlot;
+    private bool InRightOvenSlot;
+    //private bool NearOven;
+
+    public Transform LeftHandEmpty;
+    public Transform RightHandEmpty;
+    GameObject LeftHandItem;
+    GameObject RightHandItem;
+
 
     //private bool eWithinDelay;
 
@@ -27,6 +35,8 @@ public class ThirdPersonMovement : MonoBehaviour
         //player has nothing in their hand at beginning of game
         InLeftHand = false;
         InRightHand = false;
+        InLeftOvenSlot = false;
+        InRightOvenSlot = false;
     }
 
     // Update is called once per frame
@@ -52,22 +62,14 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
-    //In case other scripts need to tell the player the hand is empty/full
-    public void TellLeftHandFalse()
+    //oven is filled- tells player that 
+    public void LeftOvenSlotFill()
     {
-        InLeftHand = false;
+        InLeftOvenSlot = true;
     }
-    public void TellLeftHandTrue()
+    public void RightOvenSlotFill()
     {
-        InLeftHand = true;
-    }
-    public void TellRightHandFalse()
-    {
-        InRightHand = false;
-    }
-    public void TellRightHandTrue()
-    {
-        InLeftHand = true;
+        InRightOvenSlot = true;
     }
 
     public void OnTriggerStay(Collider other)
@@ -95,18 +97,31 @@ public class ThirdPersonMovement : MonoBehaviour
                     InRightHand = true;
                 }
             }
+        }
 
-            //notes to self/easy copy and paste :))
+        if (other.gameObject.tag == "Second Fridge")
+        {
+            //left mouse button
+            if (Input.GetMouseButton(0))
+            {
+                Debug.Log("Left Click");
+                if (InLeftHand == false)
+                {
+                    SteakItem.instance.GrabSteakLeft();
+                    InLeftHand = true;
+                }
 
-            //EggItem.instance.GrabEggRight();
-            //InRightHand = true;
-            //Input.GetKey(KeyCode.E)
-            //Debug.Log("grabbed w left");
-            //EggItem.instance.GrabEggLeft();
-            //InLeftHand = true;
-            //Debug.Log("grabbed w right");
-            //EggItem.instance.GrabEggRight();
-            //InRightHand = true;
+            }
+
+            //right mouse button
+            if (Input.GetMouseButton(1))
+            {
+                if (InRightHand == false)
+                {
+                    SteakItem.instance.GrabSteakRight();
+                    InRightHand = true;
+                }
+            }
         }
 
         if (other.gameObject.tag == "Oven")
@@ -115,20 +130,61 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 //in something in left hand...
-                if (InLeftHand == true)
+                if ((InLeftHand == true) && (InLeftOvenSlot == false))
                 {
-                    //put the left hand item in left slot
-                    EggItem.instance.DropEggLeft();
-                    InLeftHand = false;
+                    //find out what is the child of the left hand
+                    LeftHandItem = LeftHandEmpty.transform.GetChild(0).gameObject;
+
+                    //if what is in the left hand is tagged with Egg...
+                    if (LeftHandItem.tag == "Egg")
+                    {
+                        EggItem.instance.DropEggLeft();
+                        InLeftHand = false;
+                    }
+                    //if not an egg, child must be tagged with.. 
+                    else if (LeftHandItem.tag == "Steak")
+                    {
+                        SteakItem.instance.DropSteakLeft();
+                        InLeftHand = false;
+                    }
                 }
             }
             if (Input.GetMouseButton(1))
             {
-                if (InRightHand == true)
+                if ((InRightHand == true) && (InRightOvenSlot == false))
                 {
-                    EggItem.instance.DropEggRight();
-                    InRightHand = false;
+                    RightHandItem = RightHandEmpty.transform.GetChild(0).gameObject;
+
+                    if (RightHandItem.tag == "Egg")
+                    {
+                        EggItem.instance.DropEggRight();
+                        InRightHand = false;
+                    }
+                    else if (RightHandItem.tag == "Steak")
+                    {
+                        SteakItem.instance.DropSteakRight();
+                        InRightHand = false;
+                    }
                 }
+            }
+        }
+
+        //for throwing away ingredients
+        if (other.gameObject.tag == "Sink")
+        {
+
+            if ((Input.GetMouseButton(0)) && (InLeftHand == true))
+            {
+                LeftHandItem = LeftHandEmpty.transform.GetChild(0).gameObject;
+                Destroy(LeftHandItem);
+                InLeftHand = false;
+            }
+
+            if ((Input.GetMouseButton(1)) && (InRightHand == true))
+            {
+                RightHandItem = RightHandEmpty.transform.GetChild(0).gameObject;
+                Destroy(RightHandItem);
+                InRightHand = false;
             }
         }
     }
