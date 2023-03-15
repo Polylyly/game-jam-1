@@ -18,7 +18,9 @@ public class OvenPickup : MonoBehaviour
     public GameObject LeftOvenIngredient;
     public GameObject RightOvenIngredient;
 
-    public float timeRemaining = 10;
+    public float timeCookingMax = 10;
+    public float timeDisposeMax = 3;
+    public float timeRemaining;
     private bool timerIsRunning;
 
     private void Awake()
@@ -81,30 +83,51 @@ public class OvenPickup : MonoBehaviour
 
     public void SteaknEggsRecipe()
     {
-        LeftOvenIngredient = LeftSlot.transform.GetChild(0).gameObject;
-        RightOvenIngredient = RightSlot.transform.GetChild(0).gameObject;
-
+        Debug.Log("start of function!");
         timerIsRunning = true;
 
         if(timerIsRunning == true)
         {
-            Debug.Log(timeRemaining);
+            Debug.Log("Started cooking!");
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
             }
-            else
+            else if (timeRemaining <= 0)
             {
-                Debug.Log("food is ready!");
-                timeRemaining = 10f;
+                Debug.Log("food is ready!"); 
+                timerIsRunning = false;
             }
         }
-        //start timer --> yield results 
+        else
+        {
+            Debug.Log("is false now");
+            //timeRemaining = timeCookingMax;
+        }
     }
     public void IngredientsWrong()
     {
-
         Debug.Log("Ingredients Wrong!");
+        timerIsRunning = true;
+
+        if (timerIsRunning == true)
+        {
+            Debug.Log("started disposing");
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+            }
+            else if ((timeRemaining <= 0) && (timerIsRunning == true))
+            {
+                Debug.Log("Food Disposed");
+                timerIsRunning = false;
+            }
+        }
+        else
+        {
+            Debug.Log("is false now");
+            //timeRemaining = timeDisposeMax;
+        }
 
     }
 }
