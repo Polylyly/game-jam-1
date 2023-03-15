@@ -179,6 +179,10 @@ public class ThirdPersonMovement : MonoBehaviour
                 Destroy(LeftHandItem);
                 InLeftHand = false;
             }
+            else
+            {
+                Debug.Log("nothing in hand ig");
+            }
 
             if ((Input.GetMouseButton(1)) && (InRightHand == true))
             {
@@ -186,6 +190,11 @@ public class ThirdPersonMovement : MonoBehaviour
                 Destroy(RightHandItem);
                 InRightHand = false;
             }
+            else
+            {
+                Debug.Log("nothing in hand ig");
+            }
+
         }
     }
 }

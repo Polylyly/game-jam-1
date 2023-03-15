@@ -41,6 +41,7 @@ public class EggItem : MonoBehaviour
     public void GrabEggLeft()
     {
 
+        Egg = GameObject.Find("OGEgg");
         cloneEggLeft = Instantiate(Egg, LeftHandEmpty);
         cloneEggLeft.tag = "Egg";
 
@@ -48,6 +49,7 @@ public class EggItem : MonoBehaviour
     public void GrabEggRight()
     {
 
+        Egg = GameObject.Find("OGEgg");
         cloneEggRight = Instantiate(Egg, RightHandEmpty);
         cloneEggRight.tag = "Egg";
 

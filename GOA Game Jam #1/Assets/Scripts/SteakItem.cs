@@ -39,6 +39,7 @@ public class SteakItem : MonoBehaviour
     public void GrabSteakLeft()
     {
 
+        Steak = GameObject.Find("OGSteak");
         cloneSteakLeft = Instantiate(Steak, LeftHandEmpty);
         cloneSteakLeft.tag = "Steak";
 
@@ -46,6 +47,7 @@ public class SteakItem : MonoBehaviour
     public void GrabSteakRight()
     {
 
+        Steak = GameObject.Find("OGSteak");
         cloneSteakRight = Instantiate(Steak, RightHandEmpty);
         cloneSteakRight.tag = "Steak";
 
