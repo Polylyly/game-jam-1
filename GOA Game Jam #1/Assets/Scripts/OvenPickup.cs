@@ -9,6 +9,7 @@ public class OvenPickup : MonoBehaviour
 
     public Transform LeftSlot;
     public Transform RightSlot;
+    public Transform OvenProductSlot;
 
     private bool InLeftOvenSlot;
     private bool InRightOvenSlot;
@@ -17,11 +18,12 @@ public class OvenPickup : MonoBehaviour
 
     public GameObject LeftOvenIngredient;
     public GameObject RightOvenIngredient;
+    public GameObject Cake;
 
     public float timeCookingMax = 10;
     public float timeDisposeMax = 3;
-    public float timeRemaining;
-    private bool timerIsRunning;
+    //public float timeRemaining;
+    //private bool timerIsRunning;
 
     private void Awake()
     {
@@ -33,7 +35,6 @@ public class OvenPickup : MonoBehaviour
     {
         InLeftOvenSlot = false;
         InRightOvenSlot = false;
-        timerIsRunning = false;
     }
 
     // Update is called once per frame
@@ -59,14 +60,14 @@ public class OvenPickup : MonoBehaviour
 
             if( (IngredientType1 == "Egg") || (IngredientType2 == "Egg"))
             {
-                if( (IngredientType1 == "Steak") || (IngredientType2 == "Steak") )
+                if( (IngredientType1 == "Milk") || (IngredientType2 == "Milk") )
                 {
-                    SteaknEggsRecipe();
+                    Invoke("CakeRecipe", timeCookingMax);
                 }
             }
             else
             {
-                IngredientsWrong();
+                Invoke("IngredientsWrong", timeDisposeMax);
             }
         }
 
@@ -80,54 +81,48 @@ public class OvenPickup : MonoBehaviour
     {
         InRightOvenSlot = true;
     }
-
-    public void SteaknEggsRecipe()
+    public void CakeRecipe()
     {
-        Debug.Log("start of function!");
-        timerIsRunning = true;
+        Debug.Log("food is ready!");
 
-        if(timerIsRunning == true)
-        {
-            Debug.Log("Started cooking!");
-            if (timeRemaining > 0)
-            {
-                timeRemaining -= Time.deltaTime;
-            }
-            else if (timeRemaining <= 0)
-            {
-                Debug.Log("food is ready!"); 
-                timerIsRunning = false;
-            }
-        }
-        else
-        {
-            Debug.Log("is false now");
-            //timeRemaining = timeCookingMax;
-        }
+        //destroy ingredients
+        LeftOvenIngredient = LeftSlot.transform.GetChild(0).gameObject;
+        RightOvenIngredient = RightSlot.transform.GetChild(0).gameObject;
+
+        Destroy(LeftOvenIngredient);
+        InLeftOvenSlot = false;
+        ThirdPersonMovement.instance.LeftOvenSlotEmpty();
+
+        Destroy(RightOvenIngredient);
+        InRightOvenSlot = false;
+        ThirdPersonMovement.instance.RightOvenSlotEmpty();
+
+        //make cake spawn on top of oven
+        Cake = GameObject.Find("OGCake");
+        Instantiate(Cake, OvenProductSlot);
+
+        //activate the oven product collider
+        //tbd 
+
+        CancelInvoke("CakeRecipe");
     }
     public void IngredientsWrong()
     {
         Debug.Log("Ingredients Wrong!");
-        timerIsRunning = true;
 
-        if (timerIsRunning == true)
-        {
-            Debug.Log("started disposing");
-            if (timeRemaining > 0)
-            {
-                timeRemaining -= Time.deltaTime;
-            }
-            else if ((timeRemaining <= 0) && (timerIsRunning == true))
-            {
-                Debug.Log("Food Disposed");
-                timerIsRunning = false;
-            }
-        }
-        else
-        {
-            Debug.Log("is false now");
-            //timeRemaining = timeDisposeMax;
-        }
+        //destroy ingredients
+        LeftOvenIngredient = LeftSlot.transform.GetChild(0).gameObject;
+        RightOvenIngredient = RightSlot.transform.GetChild(0).gameObject;
+
+        Destroy(LeftOvenIngredient);
+        InLeftOvenSlot = false;
+        ThirdPersonMovement.instance.LeftOvenSlotEmpty();
+
+        Destroy(RightOvenIngredient);
+        InRightOvenSlot = false;
+        ThirdPersonMovement.instance.RightOvenSlotEmpty();
+
+        CancelInvoke("IngredientsWrong");
 
     }
 }

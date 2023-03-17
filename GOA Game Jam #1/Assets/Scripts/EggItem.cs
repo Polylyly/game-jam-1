@@ -11,7 +11,9 @@ public class EggItem : MonoBehaviour
     public Transform RightHandEmpty;
 
     public Transform LeftOvenSlot;
-    public Transform RightOvenSlot;
+    public Transform RightOvenSlot; 
+    public Transform LeftGrillSlot;
+    public Transform RightGrillSlot;
 
     private GameObject cloneEggLeft;
     private GameObject cloneEggRight;
@@ -68,6 +70,20 @@ public class EggItem : MonoBehaviour
         ThirdPersonMovement.instance.LeftOvenSlotFill();
         OvenPickup.instance.LeftOvenSlotFill();
     }
+    public void GrillDropEggLeft()
+    {
+        //find child of left hand empty
+        GameObject LeftHandEmpty = GameObject.Find("Left Hand");
+        cloneEggLeft = LeftHandEmpty.transform.GetChild(0).gameObject;
+
+        //destroy and replace in slot
+        Destroy(cloneEggLeft);
+        Instantiate(Egg, LeftGrillSlot);
+
+        //tell player grill is full 
+        ThirdPersonMovement.instance.LeftGrillSlotFill();
+        GrillPickup.instance.LeftGrillSlotFill();
+    }
 
     public void DropEggRight()
     {
@@ -83,5 +99,20 @@ public class EggItem : MonoBehaviour
         //tell player oven is full 
         ThirdPersonMovement.instance.RightOvenSlotFill();
         OvenPickup.instance.RightOvenSlotFill();
+    }
+    public void GrillDropEggRight()
+    {
+
+        //Find child of right hand empty
+        GameObject RightHandEmpty = GameObject.Find("Right Hand");
+        cloneEggRight = RightHandEmpty.transform.GetChild(0).gameObject;
+
+        //destroy and replace in slot
+        Destroy(cloneEggRight);
+        Instantiate(Egg, RightGrillSlot);
+
+        //tell player grill is full 
+        ThirdPersonMovement.instance.RightGrillSlotFill();
+        GrillPickup.instance.RightGrillSlotFill();
     }
 }

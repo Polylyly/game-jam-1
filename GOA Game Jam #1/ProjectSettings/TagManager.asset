@@ -13,6 +13,10 @@ TagManager:
   - Steak
   - Second Fridge
   - Sink
+  - OvenProduct
+  - GrillProduct
+  - ThirdFridge
+  - Milk
   layers:
   - Default
   - TransparentFX
