@@ -40,6 +40,7 @@ public class GenerateEnemies : MonoBehaviour
 
     IEnumerator EnemySpawn()
     {
+        yield return new WaitForSeconds(0.5f);
         int temp = 0;
         while (temp < enemyCountStart)
         {

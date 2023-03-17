@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
+    public Rigidbody rb;
 
     public Transform player;
 
@@ -18,7 +19,7 @@ public class EnemyAI : MonoBehaviour
     public float walkPointRange;
 
     public float timeBetweenAttacks;
-    bool alreadyAttacked;
+    bool alreadyAttacked = false;
 
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
@@ -77,13 +78,12 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackPlayer()
     {
-        agent.SetDestination(transform.position);
-
-        transform.LookAt(player);
+        //agent.SetDestination(transform.position);
 
         if (!alreadyAttacked)
         {
-            //Attack Code!
+            agent.enabled = false;
+            Dash();
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -95,16 +95,26 @@ public class EnemyAI : MonoBehaviour
         alreadyAttacked = false;
     }
 
-    public void TakeDamage(int damage)
+    public void Dash()
     {
-        health -= damage;
-
-        if (health <= 0)
-            Invoke(nameof(DestroyEnemy), 0.5f);
+        Debug.Log("Dash");
+        int i = 0;
+        rb.AddForce(transform.forward * 5, ForceMode.Impulse);
+        StartCoroutine(dashStop());
+        agent.enabled = true;
     }
 
-    private void DestroyEnemy()
+    IEnumerator dashStop()
     {
-        Destroy(gameObject);
+        yield return new WaitForSeconds(3);
+        rb.velocity = Vector3.zero;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            other.GetComponent<PlayerHealth>().TakeDamage(1);
+        }
     }
 }

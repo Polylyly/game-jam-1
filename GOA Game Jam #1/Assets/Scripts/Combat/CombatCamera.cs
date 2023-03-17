@@ -5,27 +5,26 @@ using Cinemachine;
 
 public class CombatCamera : MonoBehaviour
 {
-    public float mousSens = 100f;
-    public Transform body;
+    public float sensitivity;
 
-    float xRotation = 0f;
+    public Transform orientation, player;
+    public CinemachineFreeLook cineCam;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mousSens * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mousSens * Time.deltaTime;
+        cineCam.m_XAxis.m_MaxSpeed = sensitivity * 2;
+        cineCam.m_YAxis.m_MaxSpeed = sensitivity / 33;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        body.Rotate(Vector3.up * mouseX);
+        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+        orientation.forward = viewDir.normalized;
+        player.rotation = orientation.rotation;
     }
 }

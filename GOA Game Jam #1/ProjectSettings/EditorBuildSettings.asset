@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FutureWorld.unity
     guid: 2ecd9064d819d4d079c1e5c44265e57a
+  - enabled: 1
+    path: Assets/Scenes/Death.unity
+    guid: ac66e0d927874964982848c349d4cfbd
   m_configObjects: {}

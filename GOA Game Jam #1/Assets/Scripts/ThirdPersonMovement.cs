@@ -34,6 +34,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+
         //player has nothing in their hand at beginning of game
         InLeftHand = false;
         InRightHand = false;
