@@ -13,6 +13,7 @@ public class OvenPickup : MonoBehaviour
 
     public bool InLeftOvenSlot;
     public bool InRightOvenSlot;
+    public bool CakeDone;
     public string IngredientType1;
     public string IngredientType2;
 
@@ -35,6 +36,7 @@ public class OvenPickup : MonoBehaviour
     {
         InLeftOvenSlot = false;
         InRightOvenSlot = false;
+        CakeDone = false;
     }
 
     // Update is called once per frame
@@ -55,6 +57,8 @@ public class OvenPickup : MonoBehaviour
         //if both slots are filled...
         if((InLeftOvenSlot == true) && (InRightOvenSlot == true))
         {
+            Debug.Log("SLOTS FILLED");
+
             IngredientType1 = LeftOvenIngredient.tag;
             IngredientType2 = RightOvenIngredient.tag;
 
@@ -64,14 +68,14 @@ public class OvenPickup : MonoBehaviour
                 {
                     Invoke("CakeRecipe", timeCookingMax);
                 }
+                else
+                {
+                    Debug.Log("detected wrong ingredients");
+                    Invoke("IngredientsWrong", timeDisposeMax);
+                }
             }
-            else
-            {
-                Debug.Log("detected wrong ingredients");
-                Invoke("IngredientsWrong", timeDisposeMax);
-            }
+            
         }
-
 
     }
     public void LeftOvenSlotFill()
@@ -82,6 +86,15 @@ public class OvenPickup : MonoBehaviour
     {
         InRightOvenSlot = true;
     }
+    public void LeftOvenSlotEmpty()
+    {
+        InLeftOvenSlot = false;
+    }
+    public void RightOvenSlotEmpty()
+    {
+        InRightOvenSlot = false;
+    }
+
     public void CakeRecipe()
     {
         Debug.Log("food is ready!");
@@ -91,11 +104,15 @@ public class OvenPickup : MonoBehaviour
         RightOvenIngredient = RightSlot.transform.GetChild(0).gameObject;
 
         Destroy(LeftOvenIngredient);
-        //InLeftOvenSlot = false;
+        InLeftOvenSlot = false;
+
+        //DO NOT TELL PLAYER so they cant place more stuff
         //ThirdPersonMovement.instance.LeftOvenSlotEmpty();
 
         Destroy(RightOvenIngredient);
-        //InRightOvenSlot = false;
+        InRightOvenSlot = false;
+
+        //DO NOT TELL PLAYER so they cant place more stuff
         //ThirdPersonMovement.instance.RightOvenSlotEmpty();
 
         //make cake spawn on top of oven
@@ -103,10 +120,11 @@ public class OvenPickup : MonoBehaviour
         Instantiate(Cake, OvenProductSlot);
 
         //activate the oven product collider
-        //tbd 
+        CakeProductPickup.instance.CakeDone();
 
         CancelInvoke("CakeRecipe");
     }
+
     private void IngredientsWrong()
     {
         Debug.Log("Ingredients Wrong!");

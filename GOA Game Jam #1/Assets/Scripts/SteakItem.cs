@@ -56,6 +56,12 @@ public class SteakItem : MonoBehaviour
     }
     public void DropSteakLeft()
     {
+        Debug.Log("here");
+
+        //tell player oven is full 
+        ThirdPersonMovement.instance.LeftOvenSlotFill();
+        OvenPickup.instance.LeftOvenSlotFill();
+
         //find child of left hand empty
         GameObject LeftHandEmpty = GameObject.Find("Left Hand");
         cloneSteakLeft = LeftHandEmpty.transform.GetChild(0).gameObject;
@@ -64,9 +70,6 @@ public class SteakItem : MonoBehaviour
         Destroy(cloneSteakLeft);
         Instantiate(Steak, LeftOvenSlot);
 
-        //tell player oven is full 
-        ThirdPersonMovement.instance.LeftOvenSlotFill();
-        OvenPickup.instance.LeftOvenSlotFill();
     }
     public void GrillDropSteakLeft()
     {
@@ -86,6 +89,10 @@ public class SteakItem : MonoBehaviour
     public void DropSteakRight()
     {
 
+        //tell player oven is full 
+        ThirdPersonMovement.instance.RightOvenSlotFill();
+        OvenPickup.instance.RightOvenSlotFill();
+
         //Find child of right hand empty
         GameObject RightHandEmpty = GameObject.Find("Right Hand");
         cloneSteakRight = RightHandEmpty.transform.GetChild(0).gameObject;
@@ -94,9 +101,6 @@ public class SteakItem : MonoBehaviour
         Destroy(cloneSteakRight);
         Instantiate(Steak, RightOvenSlot);
 
-        //tell player oven is full 
-        ThirdPersonMovement.instance.RightOvenSlotFill();
-        OvenPickup.instance.RightOvenSlotFill();
     }
     public void GrillDropSteakRight()
     {

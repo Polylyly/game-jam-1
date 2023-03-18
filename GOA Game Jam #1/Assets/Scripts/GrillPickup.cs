@@ -63,11 +63,12 @@ public class GrillPickup : MonoBehaviour
                 {
                     Invoke("SteaknEggsRecipe", timeCookingMax);
                 }
+                else
+                {
+                    Invoke("IngredientsWrong", timeDisposeMax);
+                }
             }
-            else
-            {
-                Invoke("IngredientsWrong", timeDisposeMax);
-            }
+            
         }
 
 
@@ -82,6 +83,16 @@ public class GrillPickup : MonoBehaviour
         InRightGrillSlot = true;
         //Debug.Log("told that right grill slot is filled");
     }
+    public void LeftGrillSlotEmpty()
+    {
+        InLeftGrillSlot = false;
+        //Debug.Log("told that left grill slot is filled");
+    }
+    public void RightGrillSlotEmpty()
+    {
+        InRightGrillSlot = false;
+        //Debug.Log("told that right grill slot is filled");
+    }
 
     private void SteaknEggsRecipe()
     {
@@ -92,11 +103,15 @@ public class GrillPickup : MonoBehaviour
         RightGrillIngredient = RightSlot.transform.GetChild(0).gameObject;
 
         Destroy(LeftGrillIngredient);
-        //InLeftGrillSlot = false;
+        InLeftGrillSlot = false;
+
+        //DO NOT TELL PLAYER to avoid being able to put more stuff
         //ThirdPersonMovement.instance.LeftGrillSlotEmpty();
 
         Destroy(RightGrillIngredient);
-        //InRightGrillSlot = false;
+        InRightGrillSlot = false;
+
+        //DO NOT TELL PLAYER to avoid being able to put more stuff
         //ThirdPersonMovement.instance.RightGrillSlotEmpty();
 
         //make cake spawn on top of oven
@@ -104,7 +119,7 @@ public class GrillPickup : MonoBehaviour
         Instantiate(SteaknEggs, GrillProductSlot);
 
         //activate the oven product collider
-        //tbd 
+        SteakProductPickup.instance.SteakDone();
 
         CancelInvoke("SteaknEggsRecipe");
 

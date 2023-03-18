@@ -17,6 +17,9 @@ TagManager:
   - GrillProduct
   - ThirdFridge
   - Milk
+  - Cake
+  - SteaknEggs
+  - Table
   layers:
   - Default
   - TransparentFX

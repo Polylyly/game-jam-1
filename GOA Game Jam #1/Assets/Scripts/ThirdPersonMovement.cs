@@ -8,7 +8,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float speed = 6f;
     public float headRotateSpeed = 700f;
-    
+
     public static ThirdPersonMovement instance;
 
     public bool InLeftHand;
@@ -21,6 +21,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public Transform LeftHandEmpty;
     public Transform RightHandEmpty;
+    public Transform OvenProductSlot;
+    public Transform GrillProductSlot;
     GameObject LeftHandItem;
     GameObject RightHandItem;
 
@@ -51,7 +53,7 @@ public class ThirdPersonMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-        
+
         if (direction.magnitude >= 0.1f)
         {
             //float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
@@ -93,7 +95,7 @@ public class ThirdPersonMovement : MonoBehaviour
     }
     public void RightGrillSlotFill()
     {
-        InRightOvenSlot = true;
+        InRightGrillSlot = true;
     }
     public void LeftGrillSlotEmpty()
     {
@@ -112,7 +114,6 @@ public class ThirdPersonMovement : MonoBehaviour
             //left mouse button
             if (Input.GetMouseButton(0))
             {
-                Debug.Log("Left Click");
                 if (InLeftHand == false)
                 {
                     EggItem.instance.GrabEggLeft();
@@ -252,7 +253,6 @@ public class ThirdPersonMovement : MonoBehaviour
         //for cookin on grill
         if (other.gameObject.tag == "Grill")
         {
-            Debug.Log("near grill");
             if (Input.GetMouseButton(0))
             {
                 //in something in left hand...
@@ -305,11 +305,161 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
 
+        //for picking up cake
+        if (other.gameObject.tag == "OvenProduct")
+        {
+            if (Input.GetMouseButton(0) && (InLeftHand == false))
+            {
+                Debug.Log("Left Clicked to collect oven product");
+                //instantiate in left hand
+                GameObject Cakeclone = OvenProductSlot.transform.GetChild(0).gameObject;
+
+                Instantiate(Cakeclone, LeftHandEmpty);
+                Destroy(Cakeclone);
+
+                //left hand true
+                InLeftHand = true;
+                InLeftOvenSlot = false;
+                InRightOvenSlot = false;
+
+                //tell oven empty
+                OvenPickup.instance.LeftOvenSlotEmpty();
+                //should already be false but covering my bases!
+
+                //deactivate collider
+                CakeProductPickup.instance.CakeOff();
+            }
+            if ((Input.GetMouseButton(1)) && (InRightHand == false))
+            {
+                Debug.Log("Right Clicked to collect oven product");
+
+                //instantiate in left hand
+                GameObject Cakeclone = OvenProductSlot.transform.GetChild(0).gameObject;
+
+                Instantiate(Cakeclone, RightHandEmpty);
+                Destroy(Cakeclone);
+
+                //right hand true
+                InRightHand = true;
+                InRightOvenSlot = false;
+                InLeftOvenSlot = false;
+
+                //tell oven empty
+                OvenPickup.instance.RightOvenSlotEmpty();
+                //should already be false but covering my bases!
+
+                //deactivate collider
+                CakeProductPickup.instance.CakeOff();
+            }
+        }
+
+        //for picking up steak
+        if (other.gameObject.tag == "GrillProduct")
+        {
+            Debug.Log("NEAR GRILL W STEAK IN IT");
+
+            if (Input.GetMouseButton(0) && (InLeftHand == false))
+            {
+                Debug.Log("Left Clicked to collect grill product");
+                //instantiate in left hand
+                GameObject Steakclone = GrillProductSlot.transform.GetChild(0).gameObject;
+
+                Instantiate(Steakclone, LeftHandEmpty);
+                Destroy(Steakclone);
+
+                //left hand true
+                InLeftHand = true;
+                InLeftGrillSlot = false;
+                InRightGrillSlot = false;
+
+                //tell grill empty
+                GrillPickup.instance.LeftGrillSlotEmpty();
+                //should already be false but covering my bases!
+
+                //deactivate collider
+                SteakProductPickup.instance.SteakOff();
+            }
+            if ((Input.GetMouseButton(1)) && (InRightHand == false))
+            {
+                Debug.Log("Right Clicked to collect Steak product");
+
+                //instantiate in left hand
+                GameObject Steakclone = GrillProductSlot.transform.GetChild(0).gameObject;
+
+                Instantiate(Steakclone, RightHandEmpty);
+                Destroy(Steakclone);
+
+                //right hand true
+                InRightHand = true;
+                InRightGrillSlot = false;
+                InLeftGrillSlot = false;
+
+                //tell grill empty
+                GrillPickup.instance.RightGrillSlotEmpty();
+                //should already be false but covering my bases!
+
+                //deactivate collider
+                SteakProductPickup.instance.SteakOff();
+            }
+        }
+
+        //for dropping off products
+        if (other.gameObject.tag == "Table")
+        {
+            Debug.Log("near table");
+            if (InLeftHand == true)
+            {
+                GameObject LeftHandEmpty = GameObject.Find("Left Hand");
+                LeftHandItem = LeftHandEmpty.transform.GetChild(0).gameObject;
+
+                if ((LeftHandItem.tag == "Cake") || (LeftHandItem.tag == "SteaknEggs"))
+                {
+                    Debug.Log("left hand has product!");
+                    if (LeftHandItem.tag == "Cake")
+                    {
+                        //CakeCount += 1
+                    }
+                    if (LeftHandItem.tag == "SteaknEggs")
+                    {
+                        //SnECount += 1
+                    }
+
+                    Destroy(LeftHandItem);
+                    InLeftHand = false;
+
+                }
+            }
+
+            if (InRightHand == true)
+            {
+                GameObject RightHandEmpty = GameObject.Find("Right Hand");
+                RightHandItem = RightHandEmpty.transform.GetChild(0).gameObject; 
+
+                if ((RightHandItem.tag == "Cake") || (RightHandItem.tag == "SteaknEggs"))
+                {
+                    Debug.Log("Right hand has product!");
+                    if (RightHandItem.tag == "Cake")
+                    {
+                        //CakeCount += 1
+                    }
+                    if (RightHandItem.tag == "SteaknEggs")
+                    {
+                        //SnECount += 1
+                    }
+
+                    Destroy(RightHandItem);
+                    InRightHand = false;
+
+                }
+
+            }
+        }
+           
         //for throwing away ingredients
         if (other.gameObject.tag == "Sink")
         {
 
-            if ((Input.GetMouseButton(0)) && (InLeftHand == true))
+            if (Input.GetMouseButton(0) && (InLeftHand == true))
             {
                 LeftHandItem = LeftHandEmpty.transform.GetChild(0).gameObject;
                 Destroy(LeftHandItem);
@@ -320,7 +470,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 Debug.Log("nothing in hand ig");
             }
 
-            if ((Input.GetMouseButton(1)) && (InRightHand == true))
+            if (Input.GetMouseButton(1) && (InRightHand == true))
             {
                 RightHandItem = RightHandEmpty.transform.GetChild(0).gameObject;
                 Destroy(RightHandItem);
