@@ -11,10 +11,10 @@ public class GrillPickup : MonoBehaviour
     public Transform RightSlot;
     public Transform GrillProductSlot;
 
-    private bool InLeftGrillSlot;
-    private bool InRightGrillSlot;
-    private string IngredientType1;
-    private string IngredientType2;
+    public bool InLeftGrillSlot;
+    public bool InRightGrillSlot;
+    public string IngredientType1;
+    public string IngredientType2;
 
     public GameObject LeftGrillIngredient;
     public GameObject RightGrillIngredient;
@@ -83,7 +83,7 @@ public class GrillPickup : MonoBehaviour
         //Debug.Log("told that right grill slot is filled");
     }
 
-    public void SteaknEggsRecipe()
+    private void SteaknEggsRecipe()
     {
         Debug.Log("food is ready!");
 
@@ -92,12 +92,12 @@ public class GrillPickup : MonoBehaviour
         RightGrillIngredient = RightSlot.transform.GetChild(0).gameObject;
 
         Destroy(LeftGrillIngredient);
-        InLeftGrillSlot = false;
-        ThirdPersonMovement.instance.LeftGrillSlotEmpty();
+        //InLeftGrillSlot = false;
+        //ThirdPersonMovement.instance.LeftGrillSlotEmpty();
 
         Destroy(RightGrillIngredient);
-        InRightGrillSlot = false;
-        ThirdPersonMovement.instance.RightGrillSlotEmpty();
+        //InRightGrillSlot = false;
+        //ThirdPersonMovement.instance.RightGrillSlotEmpty();
 
         //make cake spawn on top of oven
         SteaknEggs = GameObject.Find("OGSteaknEggs");
@@ -109,7 +109,7 @@ public class GrillPickup : MonoBehaviour
         CancelInvoke("SteaknEggsRecipe");
 
     }
-    public void IngredientsWrong()
+    private void IngredientsWrong()
     {
         Debug.Log("Ingredients Wrong!");
 

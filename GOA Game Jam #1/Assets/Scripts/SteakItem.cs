@@ -96,7 +96,7 @@ public class SteakItem : MonoBehaviour
 
         //tell player oven is full 
         ThirdPersonMovement.instance.RightOvenSlotFill();
-        GrillPickup.instance.RightGrillSlotFill();
+        OvenPickup.instance.RightOvenSlotFill();
     }
     public void GrillDropSteakRight()
     {

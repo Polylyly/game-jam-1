@@ -11,10 +11,10 @@ public class OvenPickup : MonoBehaviour
     public Transform RightSlot;
     public Transform OvenProductSlot;
 
-    private bool InLeftOvenSlot;
-    private bool InRightOvenSlot;
-    private string IngredientType1;
-    private string IngredientType2;
+    public bool InLeftOvenSlot;
+    public bool InRightOvenSlot;
+    public string IngredientType1;
+    public string IngredientType2;
 
     public GameObject LeftOvenIngredient;
     public GameObject RightOvenIngredient;
@@ -67,6 +67,7 @@ public class OvenPickup : MonoBehaviour
             }
             else
             {
+                Debug.Log("detected wrong ingredients");
                 Invoke("IngredientsWrong", timeDisposeMax);
             }
         }
@@ -90,12 +91,12 @@ public class OvenPickup : MonoBehaviour
         RightOvenIngredient = RightSlot.transform.GetChild(0).gameObject;
 
         Destroy(LeftOvenIngredient);
-        InLeftOvenSlot = false;
-        ThirdPersonMovement.instance.LeftOvenSlotEmpty();
+        //InLeftOvenSlot = false;
+        //ThirdPersonMovement.instance.LeftOvenSlotEmpty();
 
         Destroy(RightOvenIngredient);
-        InRightOvenSlot = false;
-        ThirdPersonMovement.instance.RightOvenSlotEmpty();
+        //InRightOvenSlot = false;
+        //ThirdPersonMovement.instance.RightOvenSlotEmpty();
 
         //make cake spawn on top of oven
         Cake = GameObject.Find("OGCake");
@@ -106,7 +107,7 @@ public class OvenPickup : MonoBehaviour
 
         CancelInvoke("CakeRecipe");
     }
-    public void IngredientsWrong()
+    private void IngredientsWrong()
     {
         Debug.Log("Ingredients Wrong!");
 

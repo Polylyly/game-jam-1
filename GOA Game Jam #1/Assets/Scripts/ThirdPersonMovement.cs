@@ -11,12 +11,12 @@ public class ThirdPersonMovement : MonoBehaviour
     
     public static ThirdPersonMovement instance;
 
-    private bool InLeftHand;
-    private bool InRightHand;
-    private bool InLeftOvenSlot;
-    private bool InRightOvenSlot;
-    private bool InLeftGrillSlot;
-    private bool InRightGrillSlot;
+    public bool InLeftHand;
+    public bool InRightHand;
+    public bool InLeftOvenSlot;
+    public bool InRightOvenSlot;
+    public bool InLeftGrillSlot;
+    public bool InRightGrillSlot;
     //private bool NearOven;
 
     public Transform LeftHandEmpty;
@@ -232,6 +232,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     }
                     else if (RightHandItem.tag == "Steak")
                     {
+                        //Debug.Log("Check for Right Steak Bug");
                         SteakItem.instance.DropSteakRight();
                         InRightHand = false;
                     }
