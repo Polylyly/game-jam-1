@@ -26,6 +26,8 @@ public class OvenPickup : MonoBehaviour
     //public float timeRemaining;
     //private bool timerIsRunning;
 
+    bool leftSoundPlayed = false, rightSoundPlayed = false;
+
     private void Awake()
     {
         instance = this;
@@ -81,10 +83,12 @@ public class OvenPickup : MonoBehaviour
     public void LeftOvenSlotFill()
     {
         InLeftOvenSlot = true;
+        AudioManager.instance.PlayStart();
     }
     public void RightOvenSlotFill()
     {
         InRightOvenSlot = true;
+        AudioManager.instance.PlayStart();
     }
     public void LeftOvenSlotEmpty()
     {
@@ -97,6 +101,7 @@ public class OvenPickup : MonoBehaviour
 
     public void CakeRecipe()
     {
+        AudioManager.instance.PlayVictory();
         Debug.Log("food is ready!");
 
         //destroy ingredients
@@ -127,6 +132,7 @@ public class OvenPickup : MonoBehaviour
 
     private void IngredientsWrong()
     {
+        AudioManager.instance.PlayWrong();
         Debug.Log("Ingredients Wrong!");
 
         //destroy ingredients

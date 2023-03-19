@@ -32,6 +32,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void Start()
@@ -50,6 +51,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Cursor.lockState = CursorLockMode.None;
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
@@ -417,11 +419,11 @@ public class ThirdPersonMovement : MonoBehaviour
                     Debug.Log("left hand has product!");
                     if (LeftHandItem.tag == "Cake")
                     {
-                        //CakeCount += 1
+                        PlayerPrefs.SetInt("CakeCount", PlayerPrefs.GetInt("CakeCount") + 1);
                     }
                     if (LeftHandItem.tag == "SteaknEggs")
                     {
-                        //SnECount += 1
+                        PlayerPrefs.SetInt("SnECount", PlayerPrefs.GetInt("SnECount") + 1);
                     }
 
                     Destroy(LeftHandItem);
@@ -440,11 +442,11 @@ public class ThirdPersonMovement : MonoBehaviour
                     Debug.Log("Right hand has product!");
                     if (RightHandItem.tag == "Cake")
                     {
-                        //CakeCount += 1
+                        PlayerPrefs.SetInt("CakeCount", PlayerPrefs.GetInt("CakeCount") + 1);
                     }
                     if (RightHandItem.tag == "SteaknEggs")
                     {
-                        //SnECount += 1
+                        PlayerPrefs.SetInt("SnECount", PlayerPrefs.GetInt("SnECount") + 1);
                     }
 
                     Destroy(RightHandItem);

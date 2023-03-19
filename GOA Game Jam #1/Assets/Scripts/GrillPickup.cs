@@ -23,6 +23,8 @@ public class GrillPickup : MonoBehaviour
     public float timeCookingMax = 10;
     public float timeDisposeMax = 3;
 
+    bool leftSoundPlayed = false, rightSoundPlayed = false;
+
     private void Awake()
     {
         instance = this;
@@ -77,11 +79,13 @@ public class GrillPickup : MonoBehaviour
     {
         InLeftGrillSlot = true;
         //Debug.Log("told that left grill slot is filled");
+        AudioManager.instance.PlayStart();
     }
     public void RightGrillSlotFill()
     {
         InRightGrillSlot = true;
         //Debug.Log("told that right grill slot is filled");
+        AudioManager.instance.PlayStart();
     }
     public void LeftGrillSlotEmpty()
     {
@@ -96,6 +100,7 @@ public class GrillPickup : MonoBehaviour
 
     private void SteaknEggsRecipe()
     {
+        AudioManager.instance.PlayVictory();
         Debug.Log("food is ready!");
 
         //destroy ingredients
@@ -126,6 +131,7 @@ public class GrillPickup : MonoBehaviour
     }
     private void IngredientsWrong()
     {
+        AudioManager.instance.PlayWrong();
         Debug.Log("Ingredients Wrong!");
 
         //destroy ingredients
